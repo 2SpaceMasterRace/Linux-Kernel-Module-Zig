@@ -22,7 +22,7 @@ Involvement in the development of Linux kernel modules requires a foundation in 
 To effectively follow this guide, there is no obligatory requirement for performing such actions. Nonetheless, a prudent approach involves executing the examples within a test distribution on a virtual machine, thus mitigating any potential risk of disrupting the system. 
 
 ## Pre-Requisites
-Linux distributions provide the commands modprobe, insmod and depmod within a package. On Ubuntu/Debian GNU/Linux: 
+Linux distributions provide the commands `modprobe`, `insmod` and `depmod` within a package. On Ubuntu/Debian GNU/Linux: 
 ```bash
 $ sudo apt-get install build-essential kmod
 ```
@@ -83,3 +83,4 @@ $ sudo journalctl --since "1 hour ago" | grep kernel
 ```
 
 ## Man Pages References
+> [TODO]
