@@ -44,4 +44,4 @@ This project uses a very basic set of C macros to facilitate tests. You can see
 examples of this in `src/test.c`.
 
 ## Credits
-This beautiful[template](https://github.com/neoeno/toy-c-project-template) is from Kay Lack. It prioritises having the fewest elements and easiest setup. As a result, it cuts a few corners that you probably wouldn't want to cut in a professional C project. It kind of works out for this project's needs.
+This beautiful [template](https://github.com/neoeno/toy-c-project-template) is from Kay Lack. It prioritises having the fewest elements and easiest setup. As a result, it cuts a few corners that you probably wouldn't want to cut in a professional C project. It kind of works out for this project's needs.
