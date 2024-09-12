@@ -7,10 +7,6 @@ These are present by default on macOS, and on Ubuntu can be installed with
 `sudo apt install clang lldb`.
 
 ```shell
-# Clone the repo, download a zip, or run...
-; mkdir my-c-project && cd my-c-project
-; npx degit neoeno/toy-c-project-template
-
 # Check `make`, `clang` and `lldb` are installed
 ; make check
 
@@ -27,7 +23,7 @@ These are present by default on macOS, and on Ubuntu can be installed with
 ; make debug-test
 ```
 
-## How to write code
+## Project Structure
 The project is structured as three files:
 
 * `src/main.c`, whose `main` function gets run as the executable, and should probably mostly call functions in `lib.c`.
