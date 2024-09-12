@@ -1,16 +1,18 @@
 # Linux-Kernel-Module-Zig
-[The Linux Kernel Module Programming Guide](https://sysprog21.github.io/lkmpg/) is a free book by Peter Jay Salzman, Michael Burian, Ori Pomerantz, Bob Mottram, Jim Huang. This repo goes over how to integrate zig into writing your own Linux kernel modules. If you'd like a quick crash course on and Zig, check these out :
+[The Linux Kernel Module Programming Guide](https://sysprog21.github.io/lkmpg/) is a free book by Peter Jay Salzman, Michael Burian, Ori Pomerantz, Bob Mottram, Jim Huang. This repo goes over how to integrate zig when writing your own Linux kernel modules. If you'd like a quick crash course on C and Zig, check these out :
 
+#### Zig Crash Course
 - [Zig in 100 Seconds](https://www.youtube.com/watch?v=kxT8-C1vmd4)
 - [A half-hour to learn Zig](https://gist.github.com/ityonemo/769532c2017ed9143f3571e5ac104e50)
 - [Mitchell Hashimoto's writing on Zig](https://mitchellh.com/zig)
-- [Zig for Impatient Devs by Isaac Harris-Holt*](https://www.youtube.com/watch?v=5I4ZkmMS4-0)
+- [$ Zig for Impatient Devs by Isaac Harris-Holt](https://www.youtube.com/watch?v=5I4ZkmMS4-0)
 
+#### C Crash Course
 - [C in 100 Seconds](https://www.youtube.com/watch?v=U3aXWizDbQ4)
-- [Just enough C to have fun by Kay Lack*](https://www.0de5.net/stimuli/a-reintroduction-to-programming/essentials/just-enough-c-to-have-fun)
+- [$ Just enough C to have fun by Kay Lack](https://www.0de5.net/stimuli/a-reintroduction-to-programming/essentials/just-enough-c-to-have-fun)
 - [Beej's Guide to C Programming](https://beej.us/guide/bgc/)
 
-*'*' - reccomended*
+> *$ - Recommended*
 
 ## What Is A Kernel Module?
 A Linux kernel module is precisely defined as a code segment capable of dynamic loading and unloading within the kernel as needed. These modules enhance kernel capabilities without necessitating a system reboot. A notable example is seen in the device driver module, which facilitates kernel interaction withhardware components linked to the system. In the absence of modules, the prevailing approach leans toward monolithic kernels, requiring direct integrationof new functionalities into the kernel image. This approach leads to larger kernels and necessitates kernel rebuilding and subsequent system rebooting when new functionalities are desired.
@@ -20,54 +22,64 @@ Involvement in the development of Linux kernel modules requires a foundation in 
 To effectively follow this guide, there is no obligatory requirement for performing such actions. Nonetheless, a prudent approach involves executing the examples within a test distribution on a virtual machine, thus mitigating any potential risk of disrupting the system. 
 
 ## Pre-Requisites
-Linux distributions provide the commands modprobe, insmod and depmod within a package. On Ubuntu/Debian GNU/Linux:
+Linux distributions provide the commands modprobe, insmod and depmod within a package. On Ubuntu/Debian GNU/Linux: 
+```bash
+$ sudo apt-get install build-essential kmod
+```
 
-`sudo apt-get install build-essential kmod`
+```bash
+# To discover what modules are already loaded within your current kernel use the command lsmod:
+$ sudo lsmod
 
-To discover what modules are already loaded within your current kernel use the command lsmod
+# Modules are stored within the file /proc/modules, so you can also see them with: 
+$ sudo cat /proc/modules
 
-`sudo lsmod`
+# This can be a long list, and you might prefer to search for something particular. To search for the fat module: 
+$ sudo lsmod | grep fat
 
-Modules are stored within the file /proc/modules, so you can also see them with: 
+# Before building anything, it is necessary to install the header files for the kernel.
+$ sudo apt-get update
+$ sudo apt-get install kmod linux-headers-5.4.0-80-generic'
+```
+The following command provides information on the available kernel header files:
 
-`sudo cat /proc/modules`
-
-This can be a long list, and you might prefer to search for something particular. To search for the fat module: 
-
-`sudo lsmod | grep fat`
-
-Before building anything, it is necessary to install the header files for the kernel. 
-
-`1. sudo apt-get update`
-`2. apt-cache search linux-headers-`uname -r`
-
-The following command provides information on the available kernel header files. Then for example: 
-'sudo apt-get install kmod linux-headers-5.4.0-80-generic'
+```shell
+$ apt-cache search linux-headers-`uname` -r
+```
 
 You should be able to install the kernel header files for the currently running kernel by running the following in a terminal:
+> [!NOTE]
+This won't install the headers for future updates automatically and you'll have to re-run this command every time.
 
-`sudo apt-get install linux-headers-$(uname -r) -I`
+```bash
+$ sudo apt-get install linux-headers-$(uname -r) -I
+```
 
-NOTE: This won't install the headers for future updates automatically and you'll have to re-run this command every time. A better alternative would be:
+A better alternative would be:
 
-`sudo apt-get install linux-headers-generic`
+```bash
+$ sudo apt-get install linux-headers-generic
+```
 
 Ubuntu will automatically update them when a new version comes out.
 
-## CheatSheet
+## Cheatsheet
 
-#### Basics of creating, compiling, installing and removing modules
-Find info on the module
-`modinfo hello-1.ko
-sudo lsmod | grep hello`
+#### 1. Basics of creating, compiling, installing and removing modules
 
-Load module to the Kernel
-`sudo insmod hello-1.ko`
+```bash
+# Find info on the module
+$ modinfo hello-1.ko
+$ sudo lsmod | grep hello
 
-Remove module from the Kernel
-`sudo rmmod hello_1`
+# Load module to the Kernel
+$ sudo insmod hello-1.ko
 
-Check the logs
-`sudo journalctl --since "1 hour ago" | grep kernel`
+# Remove module from the Kernel
+$ sudo rmmod hello_1
+
+# Check the logs
+$ sudo journalctl --since "1 hour ago" | grep kernel
+```
 
 ## Man Pages References
