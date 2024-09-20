@@ -1,52 +1,21 @@
 # You can change these variables if you want to use a different compiler or debugger
-CC = clang
-DBG = lldb
+#CC = clang
+#DBG = lldb
+#ZCC = zog cc
 
 obj-m += main.o
 
 #  In Makefile, $(CURDIR) can set to the absolute pathname of the current working directory(after all -C options are processed, if any). See more about CURDIR in GNU make manual. 
 PWD := $(CURDIR)
+SRC := src
+
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/$(SRC) modules 
+
+clean: 	
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/$(SRC) clean
+
 
 # We use .PHONY to tell make to always run these commands even if a file exists
 # with the same name in this directory. For more information on .PHONY, see
 # https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
-# .PHONY: build-main
-# build-main: build-dir
-#	$(CC) -Wall -O0 -g -o build/main src/main.c
-
-.PHONY: check
-check:
-	@which $(CC) > /dev/null && echo "SUCCESS: $(CC) is installed" || echo "ERROR: $(CC) not found, please install clang"
-	@which $(DBG) > /dev/null && echo "SUCCESS: $(DBG) is installed" || echo "ERROR: $(DBG) not found, please install lldb"
-
-# .PHONY: build-dir
-# build-dir:
-#	if [ ! -d build ]; then mkdir build; fi
-
-.PHONY: build-test
-build-test: build-dir
-	$(CC) -Wall -O0 -g -o build/test src/test.c
-
-.PHONY: all
-all: all
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules 
-
-.PHONY: clean 
-clean: clean
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-
-.PHONY: run
-run: build-main
-	./build/main
-
-.PHONY: test
-test: build-test
-	./build/test
-
-.PHONY: debug
-debug: build-main
-	$(DBG) ./build/main
-
-.PHONY: debug-test
-debug-test: build-test
-	$(DBG) ./build/test
