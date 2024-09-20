@@ -3,17 +3,16 @@
 #DBG = lldb
 #ZCC = zog cc
 
-obj-m += main.o
+obj-m += src/main.o
 
 #  In Makefile, $(CURDIR) can set to the absolute pathname of the current working directory(after all -C options are processed, if any). See more about CURDIR in GNU make manual. 
 PWD := $(CURDIR)
-SRC := src
 
 all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/$(SRC) modules 
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules 
 
 clean: 	
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/$(SRC) clean
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 
 
 # We use .PHONY to tell make to always run these commands even if a file exists
