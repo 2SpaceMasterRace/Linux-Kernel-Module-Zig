@@ -2,7 +2,7 @@
 CC = clang
 DBG = lldb
 
-obj-m += hello-1.o
+obj-m += main.o
 
 #  In Makefile, $(CURDIR) can set to the absolute pathname of the current working directory(after all -C options are processed, if any). See more about CURDIR in GNU make manual. 
 PWD := $(CURDIR)
@@ -29,11 +29,11 @@ build-test: build-dir
 
 .PHONY: all
 all: all
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/src modules 
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules 
 
 .PHONY: clean 
 clean: clean
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/src clean
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 
 .PHONY: run
 run: build-main

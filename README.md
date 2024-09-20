@@ -15,13 +15,26 @@
 > *$ - Recommended*
 
 ## What Is A Kernel Module?
+> [!CAUTION]
+To effectively follow this guide, there is no obligatory requirement for performing such actions. Nonetheless, a prudent approach involves executing the examples within a test distribution on a virtual machine, thus mitigating any potential risk of disrupting the system. 
+
 A Linux kernel module is precisely defined as a code segment capable of dynamic loading and unloading within the kernel as needed. These modules enhance kernel capabilities without necessitating a system reboot. A notable example is seen in the device driver module, which facilitates kernel interaction withhardware components linked to the system. In the absence of modules, the prevailing approach leans toward monolithic kernels, requiring direct integrationof new functionalities into the kernel image. This approach leads to larger kernels and necessitates kernel rebuilding and subsequent system rebooting when new functionalities are desired.
 
 Involvement in the development of Linux kernel modules requires a foundation in the C programming language and a track record of creating conventional programs intended for process execution. This pursuit delves into a domain where an unregulated pointer, if disregarded, may potentially trigger the total elimination of an entire file system, resulting in a scenario that necessitates a complete system reboot.
 
-To effectively follow this guide, there is no obligatory requirement for performing such actions. Nonetheless, a prudent approach involves executing the examples within a test distribution on a virtual machine, thus mitigating any potential risk of disrupting the system. 
+
+> [!IMPORTANT]
+Vital information required for users to attain success.
+1.Modversioning: A module compiled for one kernel will not load if a different kernel is booted, unless CONFIG_MODVERSIONS is enabled in the kernel. Module versioning will be discussed later in this guide. Until module versioning is covered, the examples in this guide may not work correctly if running a kernel with modversioning turned on. However, most stock Linux distribution kernels come with modversioning enabled. If difficulties arise when loading the modules due to versioning errors, consider compiling a kernel with modversioning turned off.
+2.Using X Window System: It is highly recommended to extract, compile, and load all the examples discussed in this guide from a console. Working on these tasks within the X Window System is discouraged.
+3.SecureBoot: Numerous modern computers arrive pre-configured with UEFI SecureBoot enabled—an essential security standard ensuring booting exclusively through trusted software endorsed by the original equipment manufacturer. Certain Linux distributions even ship with the default Linux kernel configured to support SecureBoot. In these cases, the kernel module necessitates a signed security key. 
 
 ## Pre-Requisites
+> [!IMPORTANT]
+[] Add way to setup multipass and zig in vm ++ beautify commands
+[] Add Nix support
+[] Explain project structure
+
 Linux distributions provide the commands `modprobe`, `insmod` and `depmod` within a package. On Ubuntu/Debian GNU/Linux: 
 ```bash
 $ sudo apt-get install build-essential kmod
@@ -43,7 +56,7 @@ $ sudo apt-get install kmod linux-headers-5.4.0-80-generic'
 ```
 The following command provides information on the available kernel header files:
 
-```shell
+```bash
 $ apt-cache search linux-headers-`uname` -r
 ```
 
@@ -66,6 +79,16 @@ Ubuntu will automatically update them when a new version comes out.
 ## Cheatsheet
 
 #### 1. Basics of creating, compiling, installing and removing modules
+```bash
+modprobe - module probe
+insmod   - insert module
+depmod   - module dependancies?
+lsmod    - list module
+/proc/   - processes
+<printk> - print in kernel
+
+```
+
 
 ```bash
 # Find info on the module
@@ -83,4 +106,7 @@ $ sudo journalctl --since "1 hour ago" | grep kernel
 ```
 
 ## Man Pages References
-> [TODO]
+> [!IMPORTANT]
+[] Add Multipass Documentation
+[] Add Zig Downloads Reference
+[] Add all Man pages from gnu make to c lib pages
