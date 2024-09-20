@@ -2,6 +2,11 @@
 CC = clang
 DBG = lldb
 
+obj-m += hello-1.o
+
+#  In Makefile, $(CURDIR) can set to the absolute pathname of the current working directory(after all -C options are processed, if any). See more about CURDIR in GNU make manual. 
+PWD := $(CURDIR)
+
 # We use .PHONY to tell make to always run these commands even if a file exists
 # with the same name in this directory. For more information on .PHONY, see
 # https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html
@@ -21,6 +26,14 @@ build-dir:
 .PHONY: build-test
 build-test: build-dir
 	$(CC) -Wall -O0 -g -o build/test src/test.c
+
+.PHONY: all
+all: all
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/src modules 
+
+.PHONY: clean 
+clean: clean
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD)/src clean
 
 .PHONY: run
 run: build-main
