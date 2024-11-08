@@ -107,6 +107,6 @@ $ sudo journalctl --since "1 hour ago" | grep kernel
 
 ## Man Pages References
 > [!IMPORTANT]
-[] Add Multipass Documentation
-[] Add Zig Downloads Reference
+[] Add Multipass Documentation\
+[] Add Zig Downloads Reference\
 [] Add all Man pages from gnu make to c lib pages
