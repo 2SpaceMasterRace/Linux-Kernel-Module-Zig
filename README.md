@@ -24,9 +24,12 @@ Involvement in the development of Linux kernel modules requires a foundation in 
 
 
 > [!IMPORTANT]
-Vital information required for users to attain success.
-1.Modversioning: A module compiled for one kernel will not load if a different kernel is booted, unless CONFIG_MODVERSIONS is enabled in the kernel. Module versioning will be discussed later in this guide. Until module versioning is covered, the examples in this guide may not work correctly if running a kernel with modversioning turned on. However, most stock Linux distribution kernels come with modversioning enabled. If difficulties arise when loading the modules due to versioning errors, consider compiling a kernel with modversioning turned off.
-2.Using X Window System: It is highly recommended to extract, compile, and load all the examples discussed in this guide from a console. Working on these tasks within the X Window System is discouraged.
+Vital information required for users to attain success.\
+
+> 1.Modversioning: A module compiled for one kernel will not load if a different kernel is booted, unless CONFIG_MODVERSIONS is enabled in the kernel. Module versioning will be discussed later in this guide. Until module versioning is covered, the examples in this guide may not work correctly if running a kernel with modversioning turned on. However, most stock Linux distribution kernels come with modversioning enabled. If difficulties arise when loading the modules due to versioning errors, consider compiling a kernel with modversioning turned off.\
+
+2.Using X Window System: It is highly recommended to extract, compile, and load all the examples discussed in this guide from a console. Working on these tasks within the X Window System is discouraged.\
+
 3.SecureBoot: Numerous modern computers arrive pre-configured with UEFI SecureBoot enabled—an essential security standard ensuring booting exclusively through trusted software endorsed by the original equipment manufacturer. Certain Linux distributions even ship with the default Linux kernel configured to support SecureBoot. In these cases, the kernel module necessitates a signed security key. 
 
 ## Pre-Requisites
@@ -52,7 +55,7 @@ $ sudo lsmod | grep fat
 
 # Before building anything, it is necessary to install the header files for the kernel.
 $ sudo apt-get update
-$ sudo apt-get install kmod linux-headers-5.4.0-80-generic'
+$ sudo apt-get install kmod linux-headers-5.4.0-80-generic
 ```
 The following command provides information on the available kernel header files:
 
